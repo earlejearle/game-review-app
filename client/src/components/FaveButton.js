@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react';
+import game from "./Game";
 
 function FaveButton ({id, game_id}) {
     const [faves, setFaves] = useState([])
@@ -13,7 +14,7 @@ function FaveButton ({id, game_id}) {
     let fave = faves.find((fav) => game_id === fav.game_id)
     
 
-    function addFave () {
+    function addFave (event) {
         const faveData = {game_id}
         fetch(`/users/${id}/favourite_games`, {
             method: "POST",
@@ -27,8 +28,11 @@ function FaveButton ({id, game_id}) {
             }
             
         }) 
-        .then (r => r.json())
-        window.location.reload(true)
+        .then(r => {
+            r.json().then(data => {
+                setFaves([data])
+            })
+        })
 
     }
 
@@ -36,8 +40,9 @@ function FaveButton ({id, game_id}) {
         fetch(`/users/${id}/favourite_games/${fave.id}`, {
             method: "DELETE"
         })
-        .then(r => console.log("unfavourited"))
-        window.location.reload(true);
+        .then(r => {
+            setFaves([])
+        })
     }
 
     // if (fave === true) {
