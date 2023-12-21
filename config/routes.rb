@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy"
 
-  
+
   # nested resource routing since we want the user to be logged in to do more
 
 
@@ -23,6 +23,7 @@ Rails.application.routes.draw do
     resources :reviews, only: [:index, :create]
   end
 
+  get "*path", to: "fallback#index", constraints: ->(req) { !req.xhr? && req.format.html? }
   
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
