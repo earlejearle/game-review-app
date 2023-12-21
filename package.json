@@ -8,5 +8,8 @@
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "web-vitals": "^3.4.0"
+  },
+  "scripts": {
+    "postinstall": "cd client && npm install"
   }
 }
